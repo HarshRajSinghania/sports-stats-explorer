@@ -33,7 +33,7 @@ def build_database(db_path: Path = DB_PATH) -> None:
             df = pd.read_csv(csv_path)
             df.to_sql(table, conn, if_exists="append", index=False)
             print(f"  loaded {len(df):>5} rows into {table}")
-    print(f"Database ready at {db_path.relative_to(ROOT)}")
+    print(f"Database ready at {db_path}")
 
 
 if __name__ == "__main__":
