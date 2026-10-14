@@ -218,7 +218,7 @@ When it works, open a pull request. See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Where to go next
 
-- **[ROADMAP.md](ROADMAP.md)** lists tasks in order, from beginner-friendly to advanced. Pick one and tell the group you are taking it.
+- **[ROADMAP.md](ROADMAP.md)** is organized by workshop. Each one says what you will learn, what you will finish, and a take-home task. Only read the section for the workshop you are on.
 - **[CONTRIBUTING.md](CONTRIBUTING.md)** explains how to keep your fork up to date and send in your work.
 
 Every time you sit down to work, start with:
