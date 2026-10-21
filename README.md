@@ -2,6 +2,11 @@
 
 A sports analytics dashboard that settles arguments with actual data.
 
+**NFL dashboard (issue #1):** Start the app and choose **NFL Overview** for
+current-season quarterback leaders, team standings, and injury reports with
+interactive Three.js charts. See [the NFL demo and end-to-end test guide](docs/NFL_DEMO.md)
+for setup, a presentation script, offline demo mode, and source limitations.
+
 We are building a website that answers real questions about a sports league, such as:
 
 - Who are the best scorers?
