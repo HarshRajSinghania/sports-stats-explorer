@@ -37,9 +37,9 @@ const hasLabel = (issue, name) => labelNames(issue).includes(name);
 const isTracked = (issue) => hasLabel(issue, PERSONAL) || hasLabel(issue, SHARED);
 const mentionAll = (logins) => logins.map((l) => `@${l}`).join(', ');
 
-module.exports = async ({ github, context, core, getOctokit }) => {
+module.exports = async ({ github, context, core }) => {
   const { owner, repo } = context.repo;
-  const board = await openBoard(getOctokit, core);
+  const board = await openBoard(core);
 
   const reply = (number, lines) =>
     github.rest.issues.createComment({ owner, repo, issue_number: number, body: [].concat(lines).join('\n') });
@@ -267,13 +267,25 @@ module.exports = async ({ github, context, core, getOctokit }) => {
 };
 
 // Reads the project once per run. Returns null (and warns) if there is no usable token.
-async function openBoard(getOctokit, core) {
+async function openBoard(core) {
   const token = process.env.PROJECT_TOKEN;
   if (!token) {
     core.warning('No PROJECT_TOKEN secret, so cards will not move on the board. See CONTRIBUTING.md, "For leads".');
     return null;
   }
-  const graphql = getOctokit(token).graphql;
+  // github-script doesn't hand out a second client, so call the GraphQL API directly.
+  const graphql = async (query, variables) => {
+    const response = await fetch('https://api.github.com/graphql', {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query, variables }),
+    });
+    const body = await response.json();
+    if (!response.ok || body.errors) {
+      throw new Error(body.errors?.map((e) => e.message).join('; ') ?? `${response.status} ${response.statusText}`);
+    }
+    return body.data;
+  };
 
   let project;
   try {

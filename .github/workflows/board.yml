@@ -36,4 +36,4 @@ jobs:
         with:
           script: |
             const board = require('./.github/scripts/board.js');
-            await board({ github, context, core, getOctokit });
+            await board({ github, context, core });
